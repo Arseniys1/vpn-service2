@@ -8,6 +8,7 @@ use App\VpnServerLog;
 use App\Events\CreateAccessEvent;
 use App\VpnServer;
 use Illuminate\Support\Facades\Auth;
+use App\VpnServerAccess;
 
 class ServersAccessController extends Controller
 {
@@ -26,6 +27,38 @@ class ServersAccessController extends Controller
 
         $vpnServer = VpnServer::where('ip', '=', $request->input('ip'))->first();
 
+        $vpnLogReq = VpnServerLog::where('vpn_server_id', '=', $vpnServer->id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('type', '=', 'request')
+            ->where('action', '=', 'create-access')
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        if ($vpnLogReq) {
+            $vpnLogRes = VpnServerLog::where('event_id', '=', $vpnLogReq->event_id)
+                ->where('type', '=', 'response')
+                ->first();
+
+            if (!$vpnLogRes) {
+                return response()->json([
+                    'ok' => false,
+                    'message' => 'Request already sent.',
+                ]);
+            }
+        }
+
+        $serverAccess = VpnServerAccess::where('vpn_server_id', '=', $vpnServer->id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('status', '=', 'open')
+            ->first();
+
+        if ($serverAccess) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Already have access to the server.',
+            ]);
+        }
+
         $vpnLog = new VpnServerLog();
         $vpnLog->vpn_server_id = $vpnServer->id;
         $vpnLog->user_id = Auth::user()->id;
@@ -38,6 +71,37 @@ class ServersAccessController extends Controller
         return response()->json([
             'ok' => true,
             'message' => 'Request send.',
+            'event_id' => $vpnLog->event_id,
         ]);
+    }
+
+    public function checkResponse(Request $request) {
+        $v = Validator::make($request->all(), [
+            'event_id' => 'required|string',
+        ]);
+
+        if ($v->fails()) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Validation failed.',
+                'errors' => $v->errors()->toArray(),
+            ]);
+        }
+
+        $vpnServersLog = VpnServerLog::where('event_id', '=', $request->input('event_id'))
+            ->where('type', '=', 'response')
+            ->first();
+
+        if ($vpnServersLog) {
+            return response()->json([
+                'ok' => true,
+                'message' => 'Response received.',
+            ]);
+        } else {
+            return response()->json([
+                'ok' => false,
+                'message' => 'No response received.',
+            ]);
+        }
     }
 }

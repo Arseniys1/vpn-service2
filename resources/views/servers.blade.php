@@ -17,7 +17,8 @@
                                         <img src="{{ asset('images/countries/' . $server->country->image) }}">
                                         Online {{ $server->online_counter . '/' . $server->max_online }}
                                         @if(Auth::check() || $server->free == true)
-                                            <a href="{{ route('cabinet.downloadOvpnConfig', ['server_id' => $server->id]) }}">Скачать конфигурацию</a>
+                                            <a href="#" name="sendRequest" data-ip="{{ $server->ip }}">Получить доступ</a>
+                                            <a href="{{ route('cabinet.downloadOvpnConfig', ['ip' => $server->ip]) }}" name="downloadOvpn" style="display: none;">Скачать конфигурацию</a>
                                         @endif
                                     </div>
                                 </div>

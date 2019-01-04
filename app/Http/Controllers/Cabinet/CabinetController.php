@@ -7,6 +7,7 @@ use App\VpnServer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
+use App\VpnServerAccess;
 
 class CabinetController extends Controller
 {
@@ -36,26 +37,26 @@ class CabinetController extends Controller
 
     public function downloadOvpnConfig(Request $request)
     {
-        $vpnServer = VpnServer::where('id', '=', $request->route('server_id'))->first();
+        $vpnServer = VpnServer::where('ip', '=', $request->route('ip'))->first();
 
-        if ($vpnServer == null || $vpnServer->ovpn_config == null) {
+        $vpnServerAccess = VpnServerAccess::where('vpn_server_id', '=', $vpnServer->id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('status', '=', 'open')
+            ->first();
+
+        if (!$vpnServerAccess) {
             return response('No config', 404);
         }
 
-        $ovpn_config = $vpnServer->ovpn_config;
-
-        $ovpn_config = str_replace(':ip', $vpnServer->ip, $ovpn_config);
-        $ovpn_config = str_replace(':port', $vpnServer->port, $ovpn_config);
-
         $filename = $vpnServer->country->name . ' ' . $vpnServer->country->iso . ' ' . $vpnServer->ip . '_' . $vpnServer->port . '.ovpn';
 
-        return response($ovpn_config)->header('Content-Description', 'File Transfer')
+        return response($vpnServerAccess->ovpn)->header('Content-Description', 'File Transfer')
             ->header('Content-Type', 'text/plain')
             ->header('Content-Disposition', 'attachment; filename=' . $filename)
             ->header('Content-Transfer-Encoding', 'binary')
             ->header('Expires', '0')
             ->header('Cache-Control', 'must-revalidate')
             ->header('Pragma', 'Public')
-            ->header('Content-Length', strlen($ovpn_config));
+            ->header('Content-Length', strlen($vpnServerAccess->ovpn));
     }
 }

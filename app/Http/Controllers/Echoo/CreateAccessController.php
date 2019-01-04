@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\VpnServer;
 use App\VpnServerLog;
+use App\VpnServerAccess;
 use Illuminate\Support\Facades\Validator;
 
 class CreateAccessController extends Controller
@@ -43,6 +44,14 @@ class CreateAccessController extends Controller
         $vpnServerLog->action = 'create-access';
         $vpnServerLog->data = $request->input('data');
         $vpnServerLog->save();
+
+        $vpnServerAccess = new VpnServerAccess();
+        $vpnServerAccess->vpn_servers_log_id = $vpnServerLog->id;
+        $vpnServerAccess->vpn_server_id = $vpnServer->id;
+        $vpnServerAccess->user_id = $vpnServerLog->user_id;
+        $vpnServerAccess->ovpn = $data['data']['ovpn'];
+        $vpnServerAccess->status = 'open';
+        $vpnServerAccess->save();
 
         return response()->json([
             'ok' => true,
