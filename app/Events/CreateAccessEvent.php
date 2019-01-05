@@ -16,18 +16,18 @@ class CreateAccessEvent implements ShouldBroadcast
 
     public $event_id;
     public $ip;
-    public $user_id;
+    public $user_text_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($event_id, $ip, $user_id)
+    public function __construct($event_id, $ip, $user_text_id)
     {
         $this->event_id = $event_id;
         $this->ip = $ip;
-        $this->user_id = $user_id;
+        $this->user_text_id = $user_text_id;
     }
 
     /**

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UsersSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class UsersSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
+                'text_id' => Str::uuid()->toString(),
                 'name' => 'Arseniys',
                 'email' => 'thevalakas1@gmail.com',
                 'password' => Hash::make('root'),
