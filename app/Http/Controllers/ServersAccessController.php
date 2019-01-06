@@ -66,7 +66,7 @@ class ServersAccessController extends Controller
         $vpnLog->action = 'create-access';
         $vpnLog->save();
 
-        event(new CreateAccessEvent($vpnLog->event_id, $request->input('ip'), Auth::user()->text_id));
+        event(new CreateAccessEvent($vpnLog->event_id, $request->input('ip'), Auth::user()));
 
         return response()->json([
             'ok' => true,
