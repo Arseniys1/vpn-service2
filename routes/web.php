@@ -7,7 +7,7 @@ Route::get('/', function () {
 });
 
 Route::get('/send', function () {
-    event(new \App\Events\CreateAccessEvent('1', '127.0.0.1', 1));
+    event(new \App\Events\CreateAccessEvent('1', '127.0.0.1', \App\User::find(1)));
 });
 
 Route::get('/{locale}', 'Cabinet\CabinetController@index')->middleware('locale')->name('cabinet.index');

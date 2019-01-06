@@ -17,7 +17,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'vpn_username', 'vpn_password'
+        'name',
+        'email',
+        'password',
+        'vpn_username',
+        'vpn_password',
     ];
 
     /**
@@ -26,7 +30,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
+        'email',
+        'email_verified_at',
+        'vpn_username',
+        'vpn_password',
+        'locale',
+        'created_at',
+        'updated_at',
     ];
 
     protected static function boot()

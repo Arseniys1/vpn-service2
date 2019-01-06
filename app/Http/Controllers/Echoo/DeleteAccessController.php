@@ -38,7 +38,7 @@ class DeleteAccessController extends Controller
         $vpnServerLog = new VpnServerLog();
         $vpnServerLog->event_id = $data['data']['event_id'];
         $vpnServerLog->vpn_server_id = $vpnServer->id;
-        $vpnServerLog->user_id = $data['data']['user_id'];
+        $vpnServerLog->user_id = $data['data']['user']['user_id'];
         $vpnServerLog->type = 'response';
         $vpnServerLog->action = 'delete-access';
         $vpnServerLog->data = $request->input('data');
