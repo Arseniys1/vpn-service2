@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\VpnServer;
 use App\VpnServerLog;
+use App\VpnServerAccess;
 use Illuminate\Support\Facades\Validator;
 
 class DeleteAccessController extends Controller
@@ -43,6 +44,16 @@ class DeleteAccessController extends Controller
         $vpnServerLog->action = 'delete-access';
         $vpnServerLog->data = $request->input('data');
         $vpnServerLog->save();
+
+        $vpnServerAccess = VpnServerAccess::where('vpn_server_id', '=', $vpnServer->id)
+            ->where('user_id', '=', $data['data']['user']['id'])
+            ->where('status', '=', 'open')
+            ->first();
+
+        if ($vpnServerAccess) {
+            $vpnServerAccess->status = 'close';
+            $vpnServerAccess->save();
+        }
 
         return response()->json([
             'ok' => true,

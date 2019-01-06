@@ -26,4 +26,5 @@ Route::get('/cabinet/downloadOvpnConfig/{ip]', 'Cabinet\CabinetController@downlo
 Route::get('/{locale}/servers', 'ServersController@index')->middleware('locale')->name('servers.index');
 Route::get('/{locale}/servers/free', 'ServersController@free')->middleware('locale')->name('servers.free');
 Route::post('/servers/create/access', 'ServersAccessController@createAccess')->middleware('auth')->name('servers.create.access');
+Route::post('/servers/remove/access', 'ServersAccessController@removeAccess')->middleware('auth')->name('servers.remove.access');
 Route::post('/servers/check/response', 'ServersAccessController@checkResponse')->middleware('auth')->name('servers.check.response');

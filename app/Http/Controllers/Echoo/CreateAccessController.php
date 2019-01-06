@@ -36,6 +36,18 @@ class CreateAccessController extends Controller
 
         $data = json_decode($request->input('data'), true);
 
+        $vpnServerAccess = VpnServerAccess::where('vpn_server_id', '=', $vpnServer->id)
+            ->where('user_id', '=', $data['data']['user']['id'])
+            ->where('status', '=', 'open')
+            ->first();
+
+        if ($vpnServerAccess) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Already have access to the server.'
+            ]);
+        }
+
         $vpnServerLog = new VpnServerLog();
         $vpnServerLog->event_id = $data['data']['event_id'];
         $vpnServerLog->vpn_server_id = $vpnServer->id;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DeleteAccessEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\VpnServerLog;
@@ -67,6 +68,69 @@ class ServersAccessController extends Controller
         $vpnLog->save();
 
         event(new CreateAccessEvent($vpnLog->event_id, $request->input('ip'), Auth::user()));
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'Request send.',
+            'event_id' => $vpnLog->event_id,
+        ]);
+    }
+
+    public function removeAccess(Request $request) {
+        $v = Validator::make($request->all(), [
+            'ip' => 'required|ip|exists:vpn_servers,ip',
+        ]);
+
+        if ($v->fails()) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Validation failed.',
+                'errors' => $v->errors()->toArray(),
+            ]);
+        }
+
+        $vpnServer = VpnServer::where('ip', '=', $request->input('ip'))->first();
+
+        $vpnLogReq = VpnServerLog::where('vpn_server_id', '=', $vpnServer->id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('type', '=', 'request')
+            ->where('action', '=', 'remove-access')
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        if ($vpnLogReq) {
+            $vpnLogRes = VpnServerLog::where('event_id', '=', $vpnLogReq->event_id)
+                ->where('type', '=', 'response')
+                ->first();
+
+            if (!$vpnLogRes) {
+                return response()->json([
+                    'ok' => false,
+                    'message' => 'Request already sent.',
+                ]);
+            }
+        }
+
+        $serverAccess = VpnServerAccess::where('vpn_server_id', '=', $vpnServer->id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('status', '=', 'open')
+            ->first();
+
+        if (!$serverAccess) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'You do not have access to this server.',
+            ]);
+        }
+
+        $vpnLog = new VpnServerLog();
+        $vpnLog->vpn_server_id = $vpnServer->id;
+        $vpnLog->user_id = Auth::user()->id;
+        $vpnLog->type = 'request';
+        $vpnLog->action = 'remove-access';
+        $vpnLog->save();
+
+        event(new DeleteAccessEvent($vpnLog->event_id, $request->input('ip'), Auth::user()));
 
         return response()->json([
             'ok' => true,
