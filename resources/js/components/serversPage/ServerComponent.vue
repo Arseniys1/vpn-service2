@@ -164,6 +164,7 @@
                         event_id: event_id,
                     }).then((res) => {
                         if (res.data.ok) {
+                            clearInterval(interval_id);
                             callback();
                         } else {
                             if (res.data.code === 1 || res.data.code === 2) {

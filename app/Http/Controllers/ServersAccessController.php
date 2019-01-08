@@ -35,6 +35,10 @@ class ServersAccessController extends Controller
             ]);
         }
 
+        Auth::user()->makeHidden([
+            'access',
+        ]);
+
         $vpnServer = VpnServer::where('ip', '=', $request->input('ip'))->first();
 
         $vpnLogReq = VpnServerLog::where('vpn_server_id', '=', $vpnServer->id)
@@ -108,7 +112,7 @@ class ServersAccessController extends Controller
         $vpnLogReq = VpnServerLog::where('vpn_server_id', '=', $vpnServer->id)
             ->where('user_id', '=', Auth::user()->id)
             ->where('type', '=', 'request')
-            ->where('action', '=', 'remove-access')
+            ->where('action', '=', 'delete-access')
             ->orderBy('created_at', 'desc')
             ->first();
 
@@ -144,7 +148,7 @@ class ServersAccessController extends Controller
         $vpnLog->vpn_server_id = $vpnServer->id;
         $vpnLog->user_id = Auth::user()->id;
         $vpnLog->type = 'request';
-        $vpnLog->action = 'remove-access';
+        $vpnLog->action = 'delete-access';
         $vpnLog->save();
 
         event(new DeleteAccessEvent($vpnLog->event_id, $request->input('ip'), Auth::user()));

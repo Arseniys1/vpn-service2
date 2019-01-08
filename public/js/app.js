@@ -48526,6 +48526,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     event_id: event_id
                 }).then(function (res) {
                     if (res.data.ok) {
+                        clearInterval(interval_id);
                         callback();
                     } else {
                         if (res.data.code === 1 || res.data.code === 2) {
