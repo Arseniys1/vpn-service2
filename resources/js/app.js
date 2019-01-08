@@ -6,9 +6,8 @@
  */
 
 require('./bootstrap');
-require('./serversPage');
 
-//window.Vue = require('vue');
+window.Vue = require('vue');
 
 /**
  * The following block of code may be used to automatically register your
@@ -18,8 +17,8 @@ require('./serversPage');
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
+const files = require.context('./', true, /\.vue$/i)
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
@@ -32,3 +31,6 @@ require('./serversPage');
 // const app = new Vue({
 //     el: '#app'
 // });
+
+require('./errorsShow');
+require('./serversPage');

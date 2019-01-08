@@ -35,9 +35,13 @@ class CabinetController extends Controller
         ]);
     }
 
-    public function downloadOvpnConfig(Request $request)
+    public function downloadConfig(Request $request)
     {
         $vpnServer = VpnServer::where('ip', '=', $request->route('ip'))->first();
+
+        if (!$vpnServer) {
+            return response('Server not found');
+        }
 
         $vpnServerAccess = VpnServerAccess::where('vpn_server_id', '=', $vpnServer->id)
             ->where('user_id', '=', Auth::user()->id)
@@ -45,7 +49,7 @@ class CabinetController extends Controller
             ->first();
 
         if (!$vpnServerAccess) {
-            return response('No config', 404);
+            return response('You do not have access to the server');
         }
 
         $filename = $vpnServer->country->name . ' ' . $vpnServer->country->iso . ' ' . $vpnServer->ip . '_' . $vpnServer->port . '.ovpn';

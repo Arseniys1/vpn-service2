@@ -21,7 +21,7 @@ Route::post('/cabinet/settings/password', 'Cabinet\SettingsPassController@save')
 //Route::get('/cabinet/settings/password/two', 'Cabinet\SettingsTwoFactController@index')->name('cabinet.settings.password.two');
 //Route::post('/cabinet/settings/password/two', 'Cabinet\SettingsTwoFactController@save')->name('cabinet.settings.password.two.save');
 
-Route::get('/cabinet/downloadOvpnConfig/{ip]', 'Cabinet\CabinetController@downloadOvpnConfig')->name('cabinet.downloadOvpnConfig');
+Route::get('/cabinet/download/config/{ip}', 'Cabinet\CabinetController@downloadConfig')->name('cabinet.download.config');
 
 Route::get('/{locale}/servers', 'ServersController@index')->middleware('locale')->name('servers.index');
 Route::get('/{locale}/servers/free', 'ServersController@free')->middleware('locale')->name('servers.free');

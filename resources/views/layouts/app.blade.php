@@ -13,6 +13,12 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
+    <script type="text/javascript">
+        window.laravel = {
+            auth: {!! Auth::check() ? 'true' : 'false' !!},
+            hasActiveAccess: {!! Auth::check() ? Auth::user()->hasActiveAccess() ? 'true' : 'false' : 'false' !!}
+        };
+    </script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -89,6 +95,10 @@
         </nav>
 
         <main class="py-4">
+            <div id="errors-show">
+                <errors-show-component></errors-show-component>
+            </div>
+
             @yield('content')
         </main>
     </div>

@@ -16,7 +16,12 @@
 
 <script>
     export default {
+        props: [
+            'ttt',
+        ],
+
         mounted() {
+            console.log(this);
             console.log('Component mounted.')
         }
     }

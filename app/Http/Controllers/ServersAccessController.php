@@ -21,8 +21,17 @@ class ServersAccessController extends Controller
         if ($v->fails()) {
             return response()->json([
                 'ok' => false,
+                'code' => 1,
                 'message' => 'Validation failed.',
                 'errors' => $v->errors()->toArray(),
+            ]);
+        }
+
+        if (!Auth::user()->hasActiveAccess()) {
+            return response()->json([
+                'ok' => false,
+                'code' => 5,
+                'message' => 'You do not have an active subscription.',
             ]);
         }
 
@@ -43,7 +52,9 @@ class ServersAccessController extends Controller
             if (!$vpnLogRes) {
                 return response()->json([
                     'ok' => false,
+                    'code' => 2,
                     'message' => 'Request already sent.',
+                    'event_id' => $vpnLogReq->event_id,
                 ]);
             }
         }
@@ -56,6 +67,7 @@ class ServersAccessController extends Controller
         if ($serverAccess) {
             return response()->json([
                 'ok' => false,
+                'code' => 3,
                 'message' => 'Already have access to the server.',
             ]);
         }
@@ -71,6 +83,7 @@ class ServersAccessController extends Controller
 
         return response()->json([
             'ok' => true,
+            'code' => 4,
             'message' => 'Request send.',
             'event_id' => $vpnLog->event_id,
         ]);
@@ -84,6 +97,7 @@ class ServersAccessController extends Controller
         if ($v->fails()) {
             return response()->json([
                 'ok' => false,
+                'code' => 1,
                 'message' => 'Validation failed.',
                 'errors' => $v->errors()->toArray(),
             ]);
@@ -106,7 +120,9 @@ class ServersAccessController extends Controller
             if (!$vpnLogRes) {
                 return response()->json([
                     'ok' => false,
+                    'code' => 2,
                     'message' => 'Request already sent.',
+                    'event_id' => $vpnLogReq->event_id,
                 ]);
             }
         }
@@ -119,6 +135,7 @@ class ServersAccessController extends Controller
         if (!$serverAccess) {
             return response()->json([
                 'ok' => false,
+                'code' => 3,
                 'message' => 'You do not have access to this server.',
             ]);
         }
@@ -134,6 +151,7 @@ class ServersAccessController extends Controller
 
         return response()->json([
             'ok' => true,
+            'code' => 4,
             'message' => 'Request send.',
             'event_id' => $vpnLog->event_id,
         ]);
@@ -147,23 +165,39 @@ class ServersAccessController extends Controller
         if ($v->fails()) {
             return response()->json([
                 'ok' => false,
+                'code' => 1,
                 'message' => 'Validation failed.',
                 'errors' => $v->errors()->toArray(),
             ]);
         }
 
-        $vpnServersLog = VpnServerLog::where('event_id', '=', $request->input('event_id'))
+        $vpnServersLogReq = VpnServerLog::where('event_id', '=', $request->input('event_id'))
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('type', '=', 'request')
+            ->first();
+
+        if (!$vpnServersLogReq) {
+            return response()->json([
+                'ok' => false,
+                'code' => 2,
+                'message' => 'Request not found.',
+            ]);
+        }
+
+        $vpnServersLogRes = VpnServerLog::where('event_id', '=', $request->input('event_id'))
             ->where('type', '=', 'response')
             ->first();
 
-        if ($vpnServersLog) {
+        if ($vpnServersLogRes) {
             return response()->json([
                 'ok' => true,
+                'code' => 4,
                 'message' => 'Response received.',
             ]);
         } else {
             return response()->json([
                 'ok' => false,
+                'code' => 3,
                 'message' => 'No response received.',
             ]);
         }
