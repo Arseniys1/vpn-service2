@@ -1,6 +1,7 @@
 <?php
 
 require_once 'auth_routes.php';
+require_once 'admin_routes.php';
 
 Route::get('/', function () {
     return redirect()->route('cabinet.index', ['locale' => App::getLocale()]);

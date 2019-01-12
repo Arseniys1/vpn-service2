@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\VpnServerStatistics;
+use App\VpnServerLog;
 
 class VpnController extends ApiController
 {
@@ -35,19 +36,65 @@ class VpnController extends ApiController
     }
 
     public function connect(Request $request) {
+        $v = Validator::make($request->all(), [
+            'ip' => 'required|ip',
+            'user_text_id' => 'required|string',
+        ]);
+
+        if ($v->fails()) {
+            return $this->fail('Validation failed.');
+        }
+
         $vpnServer = $this->getVpnServer();
         $vpnServer->online_counter += 1;
         $vpnServer->save();
+
+        $user = User::where('text_id', '=', $request->input('user_text_id'))->first();
+
+        if (!$user) {
+            return $this->fail('User not found.');
+        }
+
+        $vpnServerLog = new VpnServerLog();
+        $vpnServerLog->vpn_server_id = $vpnServer->id;
+        $vpnServerLog->user_id = $user->id;
+        $vpnServerLog->type = 'response';
+        $vpnServerLog->action = 'client-connect';
+        $vpnServerLog->data = json_encode(['ip' => $request->input('ip')]);
+        $vpnServerLog->save();
 
         return $this->ok('Ok');
     }
 
     public function disconnect(Request $request) {
+        $v = Validator::make($request->all(), [
+            'ip' => 'required|ip',
+            'user_text_id' => 'required|string',
+        ]);
+
+        if ($v->fails()) {
+            return $this->fail('Validation failed.');
+        }
+
         $vpnServer = $this->getVpnServer();
         if ($vpnServer->online_counter > 0) {
             $vpnServer->online_counter -= 1;
         }
         $vpnServer->save();
+
+        $user = User::where('text_id', '=', $request->input('user_text_id'))->first();
+
+        if (!$user) {
+            return $this->fail('User not found.');
+        }
+
+        $vpnServerLog = new VpnServerLog();
+        $vpnServerLog->vpn_server_id = $vpnServer->id;
+        $vpnServerLog->user_id = $user->id;
+        $vpnServerLog->type = 'response';
+        $vpnServerLog->action = 'client-disconnect';
+        $vpnServerLog->data = json_encode(['ip' => $request->input('ip')]);
+        $vpnServerLog->save();
 
         return $this->ok('Ok');
     }

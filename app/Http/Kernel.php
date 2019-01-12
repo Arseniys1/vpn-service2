@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'vpnVerify' => \App\Http\Middleware\VpnVerify::class,
         'locale' => \App\Http\Middleware\Locale::class,
         'echoServerVerify' => \App\Http\Middleware\EchoServerVerify::class,
+        'roles' => \App\Http\Middleware\RoleCheck::class,
     ];
 
     /**
