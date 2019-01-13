@@ -16,7 +16,15 @@ class Payment extends Model
         return $this->hasOne('App\PaymentProvider', 'id', 'provider_id');
     }
 
+    public function statuses() {
+        return $this->hasMany('App\PaymentStatus', 'payment_id', 'id');
+    }
+
     public function discount() {
         return $this->hasOne('App\PaymentDiscount', 'id', 'discount_id');
+    }
+
+    public function userAccess() {
+        return $this->hasOne('App\UserAccess', 'id', 'user_access_id');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserAccessTable extends Migration
+class CreateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateUserAccessTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_access', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('access_id');
-            $table->integer('end_at');
-            $table->timestamps();
+        Schema::create('settings', function (Blueprint $table) {
+            $table->string('key', 255);
+            $table->string('value', 255);
         });
     }
 
@@ -29,6 +26,6 @@ class CreateUserAccessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_access');
+        Schema::dropIfExists('settings');
     }
 }

@@ -17,6 +17,7 @@ class CreatePaymentsProviderTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->string('service_name', 255);
+            $table->string('service_name_slug', 255);
             $table->string('image', 255)->nullable();
             $table->text('description')->nullable();
             $table->text('data')->nullable();

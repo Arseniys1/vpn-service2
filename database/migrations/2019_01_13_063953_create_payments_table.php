@@ -18,6 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->integer('score_id');
             $table->integer('provider_id');
             $table->integer('discount_id')->nullable();
+            $table->integer('user_access_id')->nullable();
             $table->string('status', 255);
             $table->string('price', 255);
             $table->timestamps();

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Payment;
 use App\Api\Payments\Providers\CryptonatorProvider;
 use App\PaymentDiscount;
+use App\PaymentStatus;
 
 class WayFormController extends Controller
 {
@@ -97,6 +98,11 @@ class WayFormController extends Controller
         }
 
         $payment->save();
+
+        $paymentStatus = new PaymentStatus();
+        $paymentStatus->payment_id = $payment->id;
+        $paymentStatus->status = 'created';
+        $paymentStatus->save();
 
         $paymentScore->payment_id = $payment->id;
         $paymentScore->save();

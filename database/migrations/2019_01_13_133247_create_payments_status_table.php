@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserAccessTable extends Migration
+class CreatePaymentsStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateUserAccessTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_access', function (Blueprint $table) {
+        Schema::create('payments_status', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('access_id');
-            $table->integer('end_at');
+            $table->integer('payment_id');
+            $table->string('status', 255);
+            $table->text('data')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateUserAccessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_access');
+        Schema::dropIfExists('payments_status');
     }
 }
