@@ -81,4 +81,8 @@ class User extends Authenticatable
 
         return false;
     }
+
+    public function tickets() {
+        return $this->hasMany('App\SupportTicket', 'user_id', 'id');
+    }
 }
