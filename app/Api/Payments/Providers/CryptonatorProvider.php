@@ -152,6 +152,8 @@ class CryptonatorProvider implements IProvider
         }
 
         $this->payment = $payment = $paymentScore->payment;
+        $this->paymentProvider = $paymentProvider = $payment->provider;
+        $this->paymentProviderData = json_decode($paymentProvider->data, true);
 
         if (!$this->hashCheck($request->all())) {
             $this->setPaymentStatus('service-error', json_encode($request->all()), 'Неверный secret_hash');

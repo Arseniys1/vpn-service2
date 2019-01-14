@@ -26,6 +26,7 @@ class CryptonatorProviderTest extends TestCase
         $provider = new CryptonatorProvider();
 
         $result = $provider->createPayment($payment, $paymentScore, $paymentProvider);
+
     }
 
     private function getPayment() {
