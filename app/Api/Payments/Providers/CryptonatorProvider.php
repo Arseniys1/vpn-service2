@@ -29,7 +29,7 @@ class CryptonatorProvider implements IProvider
         $this->paymentProviderData = json_decode($paymentProvider->data, true);
 
         if ($this->paymentProviderData == null) {
-            $this->setPaymentStatus('internal-error', 'Неверная data у payment provider.');
+            $this->setPaymentStatus('internal-error', null, 'Неверная data у payment provider.');
 
             return view('payments.error')->with([
                 'error' => 'Ошибка платежа.'
@@ -40,7 +40,7 @@ class CryptonatorProvider implements IProvider
             $res = $this->createPaymentInvoice();
 
             if ($res->getStatusCode() == 400) {
-                $this->setPaymentStatus('service-error', $res->getBody());
+                $this->setPaymentStatus('service-error', $res->getBody(), 'Ошибка при создании createinvoice');
 
                 return view('payments.error')->with([
                     'error' => 'Ошибка платежа.'
@@ -51,7 +51,7 @@ class CryptonatorProvider implements IProvider
                 $resBody = json_decode($res->getBody(), true);
 
                 if (!$this->hashCheck($resBody)) {
-                    $this->setPaymentStatus('service-error', 'secret_hash не прошел проверку ' . $res->getBody());
+                    $this->setPaymentStatus('service-error', $res->getBody(), 'Неверный secret_hash');
 
                     return view('payments.error')->with([
                         'error' => 'Ошибка платежа.'
@@ -154,7 +154,7 @@ class CryptonatorProvider implements IProvider
         $this->payment = $payment = $paymentScore->payment;
 
         if (!$this->hashCheck($request->all())) {
-            $this->setPaymentStatus('service-error', json_encode($request->all()));
+            $this->setPaymentStatus('service-error', json_encode($request->all()), 'Неверный secret_hash');
 
             return response('Wrong secret_hash', 400);
         }
@@ -195,7 +195,7 @@ class CryptonatorProvider implements IProvider
         return 'cryptonator.com';
     }
 
-    public function setPaymentStatus($status = 'internal-error', $data = null)
+    public function setPaymentStatus($status = 'internal-error', $data = null, $comment = null)
     {
         $this->payment->status = $status;
         $this->payment->save();
@@ -204,6 +204,7 @@ class CryptonatorProvider implements IProvider
         $paymentStatus->payment_id = $this->payment->id;
         $paymentStatus->status = $status;
         $paymentStatus->data = $data;
+        $paymentStatus->comment = $comment;
         $paymentStatus->save();
     }
 

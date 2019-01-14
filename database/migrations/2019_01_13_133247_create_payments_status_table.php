@@ -18,6 +18,7 @@ class CreatePaymentsStatusTable extends Migration
             $table->integer('payment_id');
             $table->string('status', 255);
             $table->text('data')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
