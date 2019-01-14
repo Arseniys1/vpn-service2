@@ -23,6 +23,8 @@ Route::get('/cabinet/settings/password', 'Cabinet\SettingsPassController@index')
 Route::post('/cabinet/settings/password', 'Cabinet\SettingsPassController@save')->name('cabinet.settings.password.save');
 //Route::get('/cabinet/settings/password/two', 'Cabinet\SettingsTwoFactController@index')->name('cabinet.settings.password.two');
 //Route::post('/cabinet/settings/password/two', 'Cabinet\SettingsTwoFactController@save')->name('cabinet.settings.password.two.save');
+Route::get('/cabinet/tariffs', 'Cabinet\TariffsController@index')->middleware('auth')->name('cabinet.tariffs');
+Route::get('/cabinet/tariffs/score/{access_id}', 'Cabinet\TariffsController@createPaymentScore')->middleware('auth')->name('cabinet.tariffs.score');
 
 Route::get('/cabinet/download/config/{ip}', 'Cabinet\CabinetController@downloadConfig')->name('cabinet.download.config');
 

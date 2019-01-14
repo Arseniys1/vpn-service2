@@ -19,6 +19,8 @@ class CreateAccessTable extends Migration
             $table->string('name_humanity', 255);
             $table->integer('duration')->default(0);
             $table->string('duration_humanity', 255);
+            $table->string('description')->nullable();
+            $table->string('class')->nullable();
             $table->string('price', 255)->default(0);
             $table->timestamps();
         });

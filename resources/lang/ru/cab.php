@@ -33,4 +33,5 @@ return [
     'error' => 'Ошибка',
     '1mouth' => '1 месяц',
     'password_current' => 'Текущий пароль',
+    'plan1_description' => 'Доступ ко всем платным VPN серверам!',
 ];

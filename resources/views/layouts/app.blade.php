@@ -50,7 +50,7 @@
                             <a class="nav-link" href="{{ route('cabinet') }}">{{ __('app.cabinet') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cabinet.support.my_tickets') }}">Поддержка</a>
+                            <a class="nav-link" href="{{ route('cabinet.tariffs') }}">Тарифы</a>
                         </li>
                     @endauth
                     <li class="nav-item">
@@ -61,6 +61,11 @@
                         <a class="nav-link"
                            href="{{ route('servers.free', ['locale' => App::getLocale()]) }}">{{ __('app.free_servers_list') }}</a>
                     </li>
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cabinet.support.my_tickets') }}">Поддержка</a>
+                        </li>
+                    @endauth
                 </ul>
 
                 <!-- Right Side Of Navbar -->
