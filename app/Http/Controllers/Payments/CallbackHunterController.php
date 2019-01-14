@@ -25,12 +25,6 @@ class CallbackHunterController extends Controller
             return response('Provider not found', 400);
         }
 
-        $methodName = $request->route('method') . 'Handle';
-
-        if (method_exists($provider, $methodName)) {
-            return $provider->$methodName($request);
-        } else {
-            return response('Provider method not found', 400);
-        }
+        return $provider->notificationHandle($request);
     }
 }

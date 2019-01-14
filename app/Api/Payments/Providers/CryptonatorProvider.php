@@ -76,10 +76,14 @@ class CryptonatorProvider implements IProvider
             'checkout_currency' => $this->paymentProviderData['checkout_currency'],
             'invoice_amount' => $this->payment->price / 100,
             'invoice_currency' => $this->paymentProviderData['invoice_currency'],
-            'success_url' => url('') . $this->paymentProviderData['success_url'],
-            'failed_url' => url('') . $this->paymentProviderData['failed_url'],
             'language' => $this->paymentScore->user->locale,
         ];
+
+        if (array_key_exists('success_url', $this->paymentProviderData))
+            $formParams['success_url'] = url('') . $this->paymentProviderData['success_url'];
+
+        if (array_key_exists('failed_url', $this->paymentProviderData))
+            $formParams['failed_url'] = url('') . $this->paymentProviderData['failed_url'];
 
         $formParams['secret_hash'] = $this->generateHash($formParams);
 
@@ -98,10 +102,14 @@ class CryptonatorProvider implements IProvider
             'item_description' => $this->paymentScore->access->duration_humanity,
             'invoice_amount' => $this->payment->price / 100,
             'invoice_currency' => $this->paymentProviderData['invoice_currency'],
-            'success_url' => url('') . $this->paymentProviderData['success_url'],
-            'failed_url' => url('') . $this->paymentProviderData['failed_url'],
             'language' => $this->paymentScore->user->locale,
         ];
+
+        if (array_key_exists('success_url', $this->paymentProviderData))
+            $params['success_url'] = url('') . $this->paymentProviderData['success_url'];
+
+        if (array_key_exists('failed_url', $this->paymentProviderData))
+            $params['failed_url'] = url('') . $this->paymentProviderData['failed_url'];
 
         $params = http_build_query($params);
 
@@ -129,22 +137,8 @@ class CryptonatorProvider implements IProvider
         }
     }
 
-    public function successHandle(Request $request)
-    {
-        return $this->callbackHandle($request);
-    }
-
-    public function errorHandle(Request $request)
-    {
-        return $this->callbackHandle($request);
-    }
-
     public function notificationHandle(Request $request)
     {
-        return $this->callbackHandle($request);
-    }
-
-    private function callbackHandle(Request $request) {
         $this->paymentScore = $paymentScore = $this->getPaymentScore($request->input('order_id'));
 
         if (!$paymentScore) {
@@ -190,11 +184,6 @@ class CryptonatorProvider implements IProvider
                 $userAccess->delete();
             }
         }
-    }
-
-    public function getServiceName()
-    {
-        return 'cryptonator.com';
     }
 
     public function setPaymentStatus($status = 'internal-error', $data = null, $comment = null)
