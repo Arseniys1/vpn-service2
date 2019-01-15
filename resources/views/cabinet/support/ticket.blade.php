@@ -7,7 +7,9 @@
 
             <div class="col-md-10">
                 <div class="card mb-3">
-                    <div class="card-header">Тикет #{{ $ticket->id }}</div>
+                    <div class="card-header">
+                        {{ __('support.ticket_title', ['ticket' => $ticket->id]) }}
+                    </div>
 
                     <div class="card-body">
                         <h5 class="card-title">{{ $ticket->title }}</h5>
@@ -16,19 +18,19 @@
                         </p>
                         <p class="card-text mb-1">
                             @if($ticket->status == 'open')
-                                {{ 'Статус: Открыт' }}
+                                {{ __('support.status', ['status' => __('support.open_status')]) }}
                             @elseif($ticket->status == 'close')
-                                {{ 'Статус: Закрыт' }}
+                                {{ __('support.status', ['status' => __('support.close_status')]) }}
                             @endif
                         </p>
                         @if($ticket->client_feedback == null)
-                            <a href="{{ route('cabinet.support.ticket.send.feedback.true', ['id' => $ticket->id]) }}" class="btn btn-primary">Вопрос решен</a>
-                            <a href="{{ route('cabinet.support.ticket.send.feedback.false', ['id' => $ticket->id]) }}" class="btn btn-danger">Вопрос не решен</a>
+                            <a href="{{ route_locale('cabinet.support.ticket.send.feedback.true', ['id' => $ticket->id]) }}" class="btn btn-primary">{{ __('support.issue_true') }}</a>
+                            <a href="{{ route_locale('cabinet.support.ticket.send.feedback.false', ['id' => $ticket->id]) }}" class="btn btn-danger">{{ __('support.issue_false') }}</a>
                         @endif
                     </div>
                 </div>
                 <div class="card mb-2">
-                    <div class="card-header">Сообщения</div>
+                    <div class="card-header">{{ __('support.ticket_messages') }}</div>
 
                     <div class="card-body">
                         @foreach($ticket->messages as $message)
@@ -43,11 +45,11 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('cabinet.support.ticket.send.message', ['id' => $ticket->id]) }}">
+                        <form method="POST" action="{{ route_locale('cabinet.support.ticket.send.message', ['id' => $ticket->id]) }}">
                             @csrf
 
                             <div class="form-group">
-                                <label for="messageBody">Ваше сообщение</label>
+                                <label for="messageBody">{{ __('support.ticket_message') }}</label>
                                 <textarea class="form-control" id="messageBody" name="message" rows="3"></textarea>
 
                                 @if ($errors->has('message'))
@@ -57,7 +59,7 @@
                                 @endif
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Отправить</button>
+                            <button type="submit" class="btn btn-primary">{{ __('support.ticket_send') }}</button>
                         </form>
                     </div>
                 </div>

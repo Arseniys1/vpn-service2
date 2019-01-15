@@ -1,9 +1,7 @@
 <?php
 
-Route::group(['prefix' => 'payments'], function () {
-    Route::get('/way', 'Payments\WayController@index')->middleware('auth')->name('payments.way');
-    Route::get('/way/form', 'Payments\WayFormController@index')->middleware('auth')->name('payments.way.form');
-    Route::post('/way/form', 'Payments\WayFormController@post')->middleware('auth')->name('payments.way.form.post');
+Route::get('{locale}/payments/way', 'Payments\WayController@index')->middleware('locale', 'auth')->name('payments.way');
+Route::get('{locale}/payments/way/form', 'Payments\WayFormController@index')->middleware('locale', 'auth')->name('payments.way.form');
+Route::post('{locale}/payments/way/form', 'Payments\WayFormController@post')->middleware('locale', 'auth')->name('payments.way.form.post');
 
-    Route::post('/callback/hunter/{service_slug}/notification', 'Payments\CallbackHunterController@serviceCallback')->name('payments.callback.hunter');
-});
+Route::post('payments/callback/hunter/{service_slug}/notification', 'Payments\CallbackHunterController@serviceCallback')->name('payments.callback.hunter');

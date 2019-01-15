@@ -47,23 +47,23 @@
                 <ul class="navbar-nav mr-auto">
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cabinet') }}">{{ __('app.cabinet') }}</a>
+                            <a class="nav-link" href="{{ route_locale('cabinet') }}">{{ __('app.cabinet') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cabinet.tariffs') }}">Тарифы</a>
+                            <a class="nav-link" href="{{ route_locale('cabinet.tariffs') }}">{{ __('app.tariffs') }}</a>
                         </li>
                     @endauth
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="{{ route('servers.index', ['locale' => App::getLocale()]) }}">{{ __('app.servers_list') }}</a>
+                           href="{{ route_locale('servers.index') }}">{{ __('app.servers_list') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="{{ route('servers.free', ['locale' => App::getLocale()]) }}">{{ __('app.free_servers_list') }}</a>
+                           href="{{ route_locale('servers.free') }}">{{ __('app.free_servers_list') }}</a>
                     </li>
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cabinet.support.my_tickets') }}">Поддержка</a>
+                            <a class="nav-link" href="{{ route_locale('cabinet.support.my_tickets') }}">{{ __('app.support') }}</a>
                         </li>
                     @endauth
                 </ul>
@@ -74,12 +74,12 @@
                     @guest
                         <li class="nav-item">
                             <a class="nav-link"
-                               href="{{ route('login', ['locale' => App::getLocale()]) }}">{{ __('app.login') }}</a>
+                               href="{{ route_locale('login') }}">{{ __('app.login') }}</a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
                                 <a class="nav-link"
-                                   href="{{ route('register', ['locale' => App::getLocale()]) }}">{{ __('app.register') }}</a>
+                                   href="{{ route_locale('register') }}">{{ __('app.register') }}</a>
                             </li>
                         @endif
                     @else
@@ -90,7 +90,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('cabinet.settings') }}">
+                                <a class="dropdown-item" href="{{ route_locale('cabinet.settings') }}">
                                     {{ __('app.settings') }}
                                 </a>
                                 <a class="dropdown-item" href="{{ route('logout', ['locale' => App::getLocale()]) }}"

@@ -8,4 +8,6 @@ return [
     'cabinet' => 'Cabinet',
     'servers_list' => 'Servers list',
     'free_servers_list' => 'Free servers list',
+    'support' => 'Support',
+    'tariffs' => 'Tariffs',
 ];

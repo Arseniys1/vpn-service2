@@ -7,7 +7,7 @@
 
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header">Мои тикеты</div>
+                    <div class="card-header">{{ __('support.my_tickets_title') }}</div>
 
                     <div class="card-body">
                         @foreach($tickets as $ticket)
@@ -21,7 +21,7 @@
                                             {{ $ticket->body }}
                                         @endif
                                     </p>
-                                    <p class="card-text mb-1">Последний ответ от:
+                                    <p class="card-text mb-1">{{ __('support.last_answer_from') }}
                                         @if($ticket->messages->last() == null)
                                             {{ $ticket->user->name }}
                                         @else
@@ -30,15 +30,15 @@
                                     </p>
                                     <p class="card-text mb-1">
                                         @if($ticket->status == 'open')
-                                            {{ 'Статус: Открыт' }}
+                                            {{ __('support.status', ['status' => __('support.open_status')]) }}
                                         @elseif($ticket->status == 'close')
-                                            {{ 'Статус: Закрыт' }}
+                                            {{ __('support.status', ['status' => __('support.close_status')]) }}
                                         @endif
                                     </p>
-                                    <a href="{{ route('cabinet.support.ticket', ['id' => $ticket->id]) }}" class="btn btn-primary">В тикет</a>
+                                    <a href="{{ route('cabinet.support.ticket', ['id' => $ticket->id]) }}" class="btn btn-primary">{{ __('support.in_the_ticket') }}</a>
                                     @if ($ticket->client_feedback == null)
-                                        <a href="{{ route('cabinet.support.ticket.send.feedback.true', ['id' => $ticket->id]) }}" class="btn btn-primary">Вопрос решен</a>
-                                        <a href="{{ route('cabinet.support.ticket.send.feedback.false', ['id' => $ticket->id]) }}" class="btn btn-danger">Вопрос не решен</a>
+                                        <a href="{{ route_locale('cabinet.support.ticket.send.feedback.true', ['id' => $ticket->id]) }}" class="btn btn-primary">{{ __('support.issue_true') }}</a>
+                                        <a href="{{ route_locale('cabinet.support.ticket.send.feedback.false', ['id' => $ticket->id]) }}" class="btn btn-danger">{{ __('support.issue_false') }}</a>
                                     @endif
                                 </div>
                             </div>

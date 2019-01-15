@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'my_tickets_title' => 'Мои тикеты',
+    'last_answer_from' => 'Последний ответ от:',
+    'status' => 'Статус: :status',
+    'open_status' => 'Открыт',
+    'close_status' => 'Закрыт',
+    'in_the_ticket' => 'В тикет',
+    'issue_true' => 'Вопрос решен',
+    'issue_false' => 'Вопрос не решен',
+    'my_tickets_nav' => 'Мои тикеты',
+    'create_ticket_nav' => 'Создать тикет',
+    'new_ticket_title' => 'Новый тикет',
+    'new_ticket_form_head' => 'Заголовок',
+    'new_ticket_form_message' => 'Ваше сообщение',
+    'new_ticket_form_captcha' => 'Капча',
+    'new_ticket_form_send' => 'Отправить',
+    'ticket_not_found_title' => 'Ошибка',
+    'ticket_not_found_message' => 'Тикет не найден.',
+    'ticket_title' => 'Тикет #:ticket',
+    'ticket_messages' => 'Сообщения',
+    'ticket_message' => 'Ваше сообщение',
+    'ticket_send' => 'Отправить',
+];

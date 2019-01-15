@@ -9,10 +9,10 @@
 
                 Online {{ server.online_counter + '/' + server.max_online }}
 
-                <a href="#" v-if="createAccessShow" v-on:click.prevent="createAccess()">Получить доступ</a>
-                <a href="#" v-if="removeAccessShow" v-on:click.prevent="removeAccess()">Удалить доступ</a>
-                <a :href="'/cabinet/download/config/' + this.server.ip" v-if="downloadConfigShow" v-on:click.prevent="downloadConfig()">Скачать конфигурацию</a>
-                <p class="d-inline" v-if="waitingShow">Подождите...</p>
+                <a href="#" v-if="createAccessShow" v-on:click.prevent="createAccess()">{{ langs['create_access'] }}</a>
+                <a href="#" v-if="removeAccessShow" v-on:click.prevent="removeAccess()">{{ langs['remove_access'] }}</a>
+                <a :href="'/cabinet/download/config/' + this.server.ip" v-if="downloadConfigShow" v-on:click.prevent="downloadConfig()">{{ langs['download_config'] }}</a>
+                <p class="d-inline" v-if="waitingShow">{{ langs['waiting'] }}</p>
             </div>
         </div>
     </div>
@@ -24,11 +24,13 @@
 
         props: [
             'serverProp',
+            'langsProp',
         ],
 
         data() {
             return {
                 server: this.serverProp,
+                langs: this.langsProp,
                 createAccessShow: false,
                 removeAccessShow: false,
                 downloadConfigShow: false,

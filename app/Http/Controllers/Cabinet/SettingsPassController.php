@@ -23,14 +23,14 @@ class SettingsPassController extends Controller
         if ($v->fails()) {
             return redirect()->back()->with([
                 'error' => true,
-                'error_message' => 'Ошибка валидации',
+                'error_message' => __('cab.validation_error'),
             ])->withErrors($v);
         }
 
         if (!Hash::check($request->input('password_current'), Auth::user()->password)) {
             return redirect()->back()->with([
                 'error' => true,
-                'error_message' => 'Неверный текущий пароль',
+                'error_message' => __('cab.wrong_current_password_error'),
             ]);
         }
 

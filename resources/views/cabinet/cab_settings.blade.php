@@ -16,7 +16,7 @@
                             <p class="text-danger">{{ __('cab.error') }}</p>
                         @endif
 
-                        <form action="{{ route('cabinet.settings.save') }}" method="POST">
+                        <form action="{{ route_locale('cabinet.settings.save') }}" method="POST">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="locale">{{ __('cab.language') }}</label>

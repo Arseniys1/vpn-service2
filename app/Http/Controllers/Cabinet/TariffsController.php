@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Access;
 use App\PaymentScore;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 
 class TariffsController extends Controller
 {
@@ -37,6 +38,6 @@ class TariffsController extends Controller
             $paymentScore->save();
         }
 
-        return redirect()->route('payments.way', ['score_id' => $paymentScore->id]);
+        return redirect()->route('payments.way', ['locale' => App::getLocale(), 'score_id' => $paymentScore->id]);
     }
 }

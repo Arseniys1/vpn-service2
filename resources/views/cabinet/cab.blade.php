@@ -29,7 +29,7 @@
                         @endforeach
 
                         @if(!Auth::user()->hasActiveAccess())
-                            <a class="btn btn-success" role="button" style="color: #fff;">
+                            <a href="{{ route_locale('cabinet.tariffs') }}" class="btn btn-success">
                                 {{ __('cab.buy_sub') }}
                             </a>
                         @endif

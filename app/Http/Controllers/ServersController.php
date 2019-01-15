@@ -29,6 +29,7 @@ class ServersController extends Controller
 
         return view('servers')->with([
             'title' => 'servers_title',
+            'langs' => $this->getLangs(),
             'servers' => $servers,
         ]);
     }
@@ -55,7 +56,18 @@ class ServersController extends Controller
 
         return view('servers')->with([
             'title' => 'free_servers_title',
+            'langs' => $this->getLangs(),
             'servers' => $servers,
         ]);
+    }
+
+    private function getLangs() {
+        return [
+            'no_servers' => __('servers.no_servers'),
+            'create_access' => __('servers.create_access'),
+            'remove_access' => __('servers.remove_access'),
+            'download_config' => __('servers.download_config'),
+            'waiting' => __('servers.waiting'),
+        ];
     }
 }

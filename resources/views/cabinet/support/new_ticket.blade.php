@@ -7,13 +7,13 @@
 
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header">Новый тикет</div>
+                    <div class="card-header">{{ __('support.new_ticket_title') }}</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('cabinet.support.new.ticket.post') }}">
+                        <form method="POST" action="{{ route_locale('cabinet.support.new.ticket.post') }}">
                             @csrf
 
                             <div class="form-group">
-                                <label for="title">Заголовок</label>
+                                <label for="title">{{ __('support.new_ticket_form_head') }}</label>
                                 <input type="text" class="form-control" id="title" name="title" required>
 
                                 @if ($errors->has('title'))
@@ -24,7 +24,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="message">Ваше сообщение</label>
+                                <label for="message">{{ __('support.new_ticket_form_message') }}</label>
                                 <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
 
                                 @if ($errors->has('message'))
@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="captcha">Капча</label>
+                                <label for="captcha">{{ __('support.new_ticket_form_captcha') }}</label>
                                 <input id="captcha" type="text" class="form-control" name="captcha" required>
 
                                 @if ($errors->has('captcha'))
@@ -49,7 +49,7 @@
                                 @endif
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Отправить</button>
+                            <button type="submit" class="btn btn-primary">{{ __('support.new_ticket_form_send') }}</button>
                         </form>
                     </div>
                 </div>

@@ -20,7 +20,7 @@
                             @endif
                         @endif
 
-                        <form action="{{ route('cabinet.settings.password.save') }}" method="POST">
+                        <form action="{{ route_locale('cabinet.settings.password.save') }}" method="POST">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="password_current">{{ __('cab.password_current') }}</label>

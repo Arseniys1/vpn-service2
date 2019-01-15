@@ -17,10 +17,21 @@ class Locale
      */
     public function handle($request, Closure $next)
     {
-        if ($request->route('locale') == null) {
-            App::setLocale('en');
+        if (Auth::check()) {
+            App::setLocale(Auth::user()->locale);
+        } elseif ($request->route('locale') == null) {
+            App::setLocale(config('app.locale'));
         } else {
-            App::setLocale($request->route('locale'));
+            $locales = [
+                'en',
+                'ru',
+            ];
+
+            if (array_search($request->route('locale'), $locales) !== false) {
+                App::setLocale($request->route('locale'));
+            } else {
+                App::setLocale(config('app.locale'));
+            }
         }
 
         return $next($request);

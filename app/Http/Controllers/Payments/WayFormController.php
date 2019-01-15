@@ -23,7 +23,7 @@ class WayFormController extends Controller
 
         if (!$paymentScore) {
             return view('payments.error')->with([
-                'error' => 'Счет на оплату не найден.'
+                'error' => __('payments.error_payment_invoice_not_found')
             ]);
         }
 
@@ -32,7 +32,7 @@ class WayFormController extends Controller
 
         if (!$paymentProvider) {
             return view('payments.error')->with([
-                'error' => 'Провайдер не найден.'
+                'error' => __('payments.error_payment_provider_not_found')
             ]);
         }
 
@@ -60,7 +60,7 @@ class WayFormController extends Controller
 
         if (!$paymentScore) {
             return view('payments.error')->with([
-                'error' => 'Счет на оплату не найден.'
+                'error' => __('payments.error_payment_invoice_not_found')
             ]);
         }
 
@@ -69,7 +69,7 @@ class WayFormController extends Controller
 
         if (!$paymentProvider) {
             return view('payments.error')->with([
-                'error' => 'Провайдер не найден.'
+                'error' => __('payments.error_payment_provider_not_found')
             ]);
         }
 

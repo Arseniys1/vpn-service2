@@ -10,18 +10,8 @@ use App\Http\Controllers\Controller;
 
 class SettingsController extends Controller
 {
-    /**
-     * SettingsController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index(Request $request)
     {
-        App::setLocale(Auth::user()->locale);
-
         return view('cabinet.cab_settings');
     }
 
@@ -32,7 +22,7 @@ class SettingsController extends Controller
         ]);
 
         if ($v->fails()) {
-            return redirect()->route('cabinet.settings')->with([
+            return redirect()->route('cabinet.settings', ['locale' => App::getLocale()])->with([
                 'error' => true,
             ]);
         }
@@ -41,7 +31,7 @@ class SettingsController extends Controller
         $user->locale = $request->input('locale');
         $user->save();
 
-        return redirect()->route('cabinet.settings')->with([
+        return redirect()->route('cabinet.settings', ['locale' => App::getLocale()])->with([
             'success' => true,
         ]);
     }

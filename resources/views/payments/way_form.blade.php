@@ -5,26 +5,35 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Подтверждение способа оплаты</div>
+                    <div class="card-header">{{ __('payments.way_form_title') }}</div>
 
                     <div class="card-body">
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h5 class="card-title">Информация о подписке</h5>
-                                <p class="card-text">Подписка: {{ $paymentScore->access->name_humanity }}</p>
+                                <h5 class="card-title">{{ __('payments.way_form_info_access') }}</h5>
                                 <p class="card-text">
-                                    Продолжительность: {{ $paymentScore->access->duration_humanity }}</p>
-                                <p class="card-text">Цена: {{ $paymentScore->access->price / 100 . ' $' }}</p>
+                                    {{ __('payments.way_form_access', ['name' => __($paymentScore->access->name_humanity)]) }}
+                                </p>
+                                <p class="card-text">
+                                    {{ __('payments.way_form_access_duration', ['duration' => __($paymentScore->access->duration_humanity)]) }}
+                                </p>
+                                <p class="card-text">
+                                    {{ __('payments.way_form_access_price', ['price' => $paymentScore->access->price / 100]) }}
+                                </p>
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Информация о способе оплаты</h5>
-                                <p class="card-text">Название: {{ $paymentProvider->name }}</p>
-                                <p class="card-text">Описание: {{ $paymentProvider->description }}</p>
+                                <h5 class="card-title">{{ __('payments.way_form_info_payment') }}</h5>
+                                <p class="card-text">
+                                    {{ __('payments.way_form_payment', ['name' => __($paymentProvider->name)]) }}
+                                </p>
+                                <p class="card-text">
+                                    {{ __('payments.way_form_payment_description', ['description' => __($paymentProvider->description)]) }}
+                                </p>
                             </div>
                         </div>
-                        <form method="post" action="{{ route('payments.way.form.post') }}" class="mt-3">
+                        <form method="post" action="{{ route_locale('payments.way.form.post') }}" class="mt-3">
                             @csrf
 
                             <input type="hidden" name="score_id" value="{{ $paymentScore->id }}">
@@ -43,7 +52,7 @@
                             @endif
 
                             <div class="form-group">
-                                <label for="discount_code">Скидочный код</label>
+                                <label for="discount_code">{{ __('payments.way_form_discount') }}</label>
                                 <input type="text" class="form-control" id="discount_code" name="discount_code">
 
                                 @if ($errors->has('discount_code'))
@@ -52,7 +61,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <button type="submit" class="btn btn-primary">Подтверждаю</button>
+                            <button type="submit" class="btn btn-primary">{{ __('payments.way_form_confirm') }}</button>
                         </form>
                     </div>
                 </div>
