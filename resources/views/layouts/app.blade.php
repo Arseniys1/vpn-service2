@@ -93,12 +93,12 @@
                                 <a class="dropdown-item" href="{{ route_locale('cabinet.settings') }}">
                                     {{ __('app.settings') }}
                                 </a>
-                                <a class="dropdown-item" href="{{ route('logout', ['locale' => App::getLocale()]) }}"
+                                <a class="dropdown-item" href="{{ route_locale('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('app.logout') }}
                                 </a>
-                                <form id="logout-form" action="{{ route('logout', ['locale' => App::getLocale()]) }}"
+                                <form id="logout-form" action="{{ route_locale('logout') }}"
                                       method="POST" style="display: none;">
                                     @csrf
                                 </form>

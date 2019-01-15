@@ -35,7 +35,7 @@
                                             {{ __('support.status', ['status' => __('support.close_status')]) }}
                                         @endif
                                     </p>
-                                    <a href="{{ route('cabinet.support.ticket', ['id' => $ticket->id]) }}" class="btn btn-primary">{{ __('support.in_the_ticket') }}</a>
+                                    <a href="{{ route_locale('cabinet.support.ticket', ['id' => $ticket->id]) }}" class="btn btn-primary">{{ __('support.in_the_ticket') }}</a>
                                     @if ($ticket->client_feedback == null)
                                         <a href="{{ route_locale('cabinet.support.ticket.send.feedback.true', ['id' => $ticket->id]) }}" class="btn btn-primary">{{ __('support.issue_true') }}</a>
                                         <a href="{{ route_locale('cabinet.support.ticket.send.feedback.false', ['id' => $ticket->id]) }}" class="btn btn-danger">{{ __('support.issue_false') }}</a>

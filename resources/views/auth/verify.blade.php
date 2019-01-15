@@ -15,7 +15,7 @@
                     @endif
 
                     {{ __('login.verify_check_email') }}
-                    {{ __('login.verify_no_mail') }}, <a href="{{ route('verification.resend', ['locale' => App::getLocale()]) }}">{{ __('login.verify_new_request') }}</a>.
+                    {{ __('login.verify_no_mail') }}, <a href="{{ route_locale('verification.resend') }}">{{ __('login.verify_new_request') }}</a>.
                 </div>
             </div>
         </div>

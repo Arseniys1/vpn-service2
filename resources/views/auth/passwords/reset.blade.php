@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('login.reset_password_title') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('password.update', ['locale' => App::getLocale()]) }}">
+                    <form method="POST" action="{{ route_locale('password.update') }}">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">

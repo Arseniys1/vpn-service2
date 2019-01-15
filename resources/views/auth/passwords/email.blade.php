@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email', ['locale' => App::getLocale()]) }}">
+                    <form method="POST" action="{{ route_locale('password.email') }}">
                         @csrf
 
                         <div class="form-group row">
