@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\SupportTicket;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 
 class NewTicketController extends Controller
 {
@@ -32,6 +33,6 @@ class NewTicketController extends Controller
         $ticket->status = 'open';
         $ticket->save();
 
-        return redirect()->route('cabinet.support.my_tickets');
+        return redirect()->route('cabinet.support.my_tickets', ['locale' => App::getLocale()]);
     }
 }

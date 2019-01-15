@@ -1,12 +1,8 @@
 <?php
 
-Route::get('/', function () {
-    return redirect()->route('cabinet.index', ['locale' => App::getLocale()]);
-})->middleware('locale', 'auth');
+Route::get('/', 'Cabinet\CabinetController@index')->middleware('locale', 'auth')->name('index');
 
-Route::get('/{locale}', 'Cabinet\CabinetController@index')->middleware('locale', 'auth')->name('cabinet.index');
-
-Route::get('{locale}/cabinet', 'Cabinet\CabinetController@index')->middleware('locale', 'auth')->name('cabinet');
+Route::get('{locale}/cabinet', 'Cabinet\CabinetController@index')->middleware('locale', 'auth')->name('cabinet.index');
 
 Route::get('{locale}/cabinet/settings', 'Cabinet\SettingsController@index')->middleware('locale', 'auth')->name('cabinet.settings');
 Route::post('{locale}/cabinet/settings', 'Cabinet\SettingsController@save')->middleware('locale', 'auth')->name('cabinet.settings.save');

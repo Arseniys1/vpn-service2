@@ -47,7 +47,7 @@
                 <ul class="navbar-nav mr-auto">
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route_locale('cabinet') }}">{{ __('app.cabinet') }}</a>
+                            <a class="nav-link" href="{{ route_locale('cabinet.index') }}">{{ __('app.cabinet') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route_locale('cabinet.tariffs') }}">{{ __('app.tariffs') }}</a>
