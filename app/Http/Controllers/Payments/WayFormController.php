@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Payments;
 
+use App\Api\Payments\Providers\RobokassaProvider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\PaymentScore;
@@ -113,6 +114,10 @@ class WayFormController extends Controller
     private function handleCreatePayment($payment, $paymentScore, $paymentProvider) {
         if ($paymentProvider->service_name == 'cryptonator.com') {
             $provider = new CryptonatorProvider();
+
+            return $provider->createPayment($payment, $paymentScore, $paymentProvider);
+        } elseif ($paymentProvider->service_name == 'robokassa.ru') {
+            $provider = new RobokassaProvider();
 
             return $provider->createPayment($payment, $paymentScore, $paymentProvider);
         }

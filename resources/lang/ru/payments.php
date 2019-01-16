@@ -31,4 +31,6 @@ return [
 
     'bitcoin' => 'Биткоин',
     'bitcoin_payment' => 'Биткоин оплата',
+    'robokassa' => 'Робокасса',
+    'robokassa_payment' => 'Оплата через Робокасса',
 ];
