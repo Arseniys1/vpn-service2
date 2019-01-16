@@ -12,6 +12,9 @@
                             @foreach($providers as $provider)
                                 <div class="col-md-4 col-12">
                                     <div class="card">
+                                        @if($provider->image)
+                                            <img src="{{ asset('images/payments/' . $provider->image) }}" class="card-img-top payment-provider-image mt-4 ml-4">
+                                        @endif
                                         <div class="card-body">
                                             <h5 class="card-title">{{ __($provider->name) }}</h5>
                                             <p class="card-text">{{ __($provider->description) }}</p>
