@@ -10,4 +10,5 @@ return [
     'free_servers_list' => 'Список бесплатных серверов',
     'support' => 'Поддержка',
     'tariffs' => 'Тарифы',
+    'locale' => 'Язык',
 ];

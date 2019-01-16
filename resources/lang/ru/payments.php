@@ -19,6 +19,15 @@ return [
     'error_payment_invoice_not_found' => 'Счет на оплату не найден.',
     'error_payment_provider_not_found' => 'Провайдер не найден.',
 
+    'success_title' => 'Оплата успешно завершена',
+    'score_id' => 'ID счета: :score_id',
+    'tariff' => 'Тариф: :tariff',
+    'duration' => 'Продолжительность: :duration',
+    'description' => 'Описание: :description',
+    'subscription_activated' => 'Подписка активирована',
+    'contact_support' => 'Если возникли проблемы с платежом обратитесь в поддержку',
+    'after_payment_error_title' => 'Оплата завершена с ошибкой',
+
     'bitcoin' => 'Биткоин',
     'bitcoin_payment' => 'Биткоин оплата',
 ];

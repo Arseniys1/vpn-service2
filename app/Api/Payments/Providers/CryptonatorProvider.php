@@ -10,6 +10,7 @@ use App\PaymentStatus;
 use App\Access;
 use App\UserAccess;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\App;
 
 class CryptonatorProvider implements IProvider
 {
@@ -79,11 +80,25 @@ class CryptonatorProvider implements IProvider
             'language' => $this->paymentScore->user->locale,
         ];
 
-        if (array_key_exists('success_url', $this->paymentProviderData))
+        if (array_key_exists('success_url', $this->paymentProviderData)) {
             $formParams['success_url'] = url('') . $this->paymentProviderData['success_url'];
+        } else {
+            $formParams['success_url'] = route('payments.callback.hunter', [
+                'service_slug' => $this->payment->provider->service_name_slug,
+                'method' => 'success',
+                'score_id' => $this->paymentScore->id,
+            ]);
+        }
 
-        if (array_key_exists('failed_url', $this->paymentProviderData))
+        if (array_key_exists('failed_url', $this->paymentProviderData)) {
             $formParams['failed_url'] = url('') . $this->paymentProviderData['failed_url'];
+        } else {
+            $formParams['failed_url'] = route('payments.callback.hunter', [
+                'service_slug' => $this->payment->provider->service_name_slug,
+                'method' => 'error',
+                'score_id' => $this->paymentScore->id,
+            ]);
+        }
 
         $formParams['secret_hash'] = $this->generateHash($formParams);
 
@@ -105,11 +120,25 @@ class CryptonatorProvider implements IProvider
             'language' => $this->paymentScore->user->locale,
         ];
 
-        if (array_key_exists('success_url', $this->paymentProviderData))
-            $params['success_url'] = url('') . $this->paymentProviderData['success_url'];
+        if (array_key_exists('success_url', $this->paymentProviderData)) {
+            $formParams['success_url'] = url('') . $this->paymentProviderData['success_url'];
+        } else {
+            $formParams['success_url'] = route('payments.callback.hunter', [
+                'service_slug' => $this->payment->provider->service_name_slug,
+                'method' => 'success',
+                'score_id' => $this->paymentScore->id,
+            ]);
+        }
 
-        if (array_key_exists('failed_url', $this->paymentProviderData))
-            $params['failed_url'] = url('') . $this->paymentProviderData['failed_url'];
+        if (array_key_exists('failed_url', $this->paymentProviderData)) {
+            $formParams['failed_url'] = url('') . $this->paymentProviderData['failed_url'];
+        } else {
+            $formParams['failed_url'] = route('payments.callback.hunter', [
+                'service_slug' => $this->payment->provider->service_name_slug,
+                'method' => 'error',
+                'score_id' => $this->paymentScore->id,
+            ]);
+        }
 
         $params = http_build_query($params);
 
@@ -184,6 +213,30 @@ class CryptonatorProvider implements IProvider
                 $userAccess->delete();
             }
         }
+    }
+
+    public function successHandle(Request $request) {
+        $parameters = [
+            'locale' => App::getLocale()
+        ];
+
+        if ($request->has('score_id')) {
+            $parameters['score_id'] = $request->input('score_id');
+        }
+
+        return redirect()->route('payments.success', $parameters);
+    }
+
+    public function errorHandle(Request $request) {
+        $parameters = [
+            'locale' => App::getLocale()
+        ];
+
+        if ($request->has('score_id')) {
+            $parameters['score_id'] = $request->input('score_id');
+        }
+
+        return redirect()->route('payments.error', $parameters);
     }
 
     public function setPaymentStatus($status = 'internal-error', $data = null, $comment = null)

@@ -10,4 +10,5 @@ return [
     'free_servers_list' => 'Free servers list',
     'support' => 'Support',
     'tariffs' => 'Tariffs',
+    'locale' => 'Language',
 ];

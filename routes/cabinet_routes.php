@@ -4,6 +4,8 @@ Route::get('/', 'Cabinet\CabinetController@index')->middleware('locale', 'auth')
 
 Route::get('{locale}/cabinet', 'Cabinet\CabinetController@index')->middleware('locale', 'auth')->name('cabinet.index');
 
+Route::get('locale/{locale}', 'Cabinet\LocaleController@changeLocale')->name('locale.change');
+
 Route::get('{locale}/cabinet/settings', 'Cabinet\SettingsController@index')->middleware('locale', 'auth')->name('cabinet.settings');
 Route::post('{locale}/cabinet/settings', 'Cabinet\SettingsController@save')->middleware('locale', 'auth')->name('cabinet.settings.save');
 Route::get('{locale}/cabinet/settings/password', 'Cabinet\SettingsPassController@index')->middleware('locale', 'auth')->name('cabinet.settings.password');

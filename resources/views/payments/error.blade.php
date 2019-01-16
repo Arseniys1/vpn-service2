@@ -4,14 +4,14 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">{{ __('payments.error_title') }}</div>
+                <div class="card text-white bg-danger">
+                    <div class="card-header">{{ __('payments.after_payment_error_title') }}</div>
 
                     <div class="card-body">
-                        @isset($error)
-                            <p class="text-danger">{{ __($error) }}</p>
+                        @isset($paymentScore)
+                            <p class="card-text"><strong>{{ __('payments.score_id', ['score_id' => $paymentScore->id]) }}</strong></p>
                         @endisset
-                        <p>{{ __('payments.error_contact_support') }}</p>
+                        <p class="card-text">{{ __('payments.contact_support') }}</p>
                     </div>
                 </div>
             </div>

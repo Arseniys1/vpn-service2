@@ -11,4 +11,6 @@ interface IProvider
 {
     public function createPayment(Payment $payment, PaymentScore $paymentScore, PaymentProvider $paymentProvider);
     public function notificationHandle(Request $request);
+    public function successHandle(Request $request);
+    public function errorHandle(Request $request);
 }
