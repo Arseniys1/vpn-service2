@@ -33,4 +33,7 @@ return [
     'error' => 'Error',
     '1mouth' => '1 month',
     'password_current' => 'Current password',
+    'plan1_description' => 'Access to all paid VPN servers!',
+    'validation_error' => 'Validation error',
+    'wrong_current_password_error' => 'Invalid current password',
 ];

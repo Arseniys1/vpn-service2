@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'my_tickets_title' => 'My tickets',
+    'last_answer_from' => 'Last reply from:',
+    'status' => 'Status: :status',
+    'open_status' => 'Open',
+    'close_status' => 'Close',
+    'in_the_ticket' => 'In the ticket',
+    'issue_true' => 'Issue resolved',
+    'issue_false' => 'The issue is not resolved',
+    'my_tickets_nav' => 'My tickets',
+    'create_ticket_nav' => 'Create ticket',
+    'new_ticket_title' => 'New ticket',
+    'new_ticket_form_head' => 'Headline',
+    'new_ticket_form_message' => 'Your message',
+    'new_ticket_form_captcha' => 'Captcha',
+    'new_ticket_form_send' => 'Send',
+    'ticket_not_found_title' => 'Error',
+    'ticket_not_found_message' => 'Ticket not found.',
+    'ticket_title' => 'Ticket #:ticket',
+    'ticket_messages' => 'Messages',
+    'ticket_message' => 'Your message',
+    'ticket_send' => 'Send',
+];
