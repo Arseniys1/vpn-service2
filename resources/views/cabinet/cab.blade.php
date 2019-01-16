@@ -11,9 +11,9 @@
                         @foreach(Auth::user()->access as $access)
                             @if($access->pivot->end_at > time())
                                 <div class="card text-white bg-primary mb-3">
-                                    <div class="card-header">{{ __('cab.' . $access->name_humanity) }}</div>
+                                    <div class="card-header">{{ __($access->name_humanity) }}</div>
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ __('cab.duration') . __('cab.' . $access->duration_humanity) }}</h5>
+                                        <h5 class="card-title">{{ __('cab.duration') . __($access->duration_humanity) }}</h5>
                                         <h5 class="card-title">{{ __('cab.price') . $access->price / 100 . '$' }}</h5>
                                         <p class="card-text">
                                             <?php
