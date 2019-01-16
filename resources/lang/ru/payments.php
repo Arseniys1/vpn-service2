@@ -27,6 +27,7 @@ return [
     'subscription_activated' => 'Подписка активирована',
     'contact_support' => 'Если возникли проблемы с платежом обратитесь в поддержку',
     'after_payment_error_title' => 'Оплата завершена с ошибкой',
+    'payment_error' => 'Ошибка платежа',
 
     'bitcoin' => 'Биткоин',
     'bitcoin_payment' => 'Биткоин оплата',

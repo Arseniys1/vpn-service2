@@ -2,6 +2,7 @@
 
 namespace App\Api\Payments\Providers;
 
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\PaymentScore;
@@ -32,19 +33,29 @@ class CryptonatorProvider implements IProvider
         if ($this->paymentProviderData == null) {
             $this->setPaymentStatus('internal-error', null, 'Неверная data у payment provider.');
 
-            return view('payments.error')->with([
-                'error' => 'Ошибка платежа.'
+            return view('payments.way_error')->with([
+                'error' => __('payments.payment_error')
             ]);
         }
 
         if ($this->paymentProviderData['type'] == 'createinvoice') {
-            $res = $this->createPaymentInvoice();
+            $res = null;
+
+            try {
+                $res = $this->createPaymentInvoice();
+            } catch (ClientException $e) {
+                $this->setPaymentStatus('service-error', $e->getMessage(), 'Ошибка при создании createinvoice');
+
+                return view('payments.way_error')->with([
+                    'error' => __('payments.payment_error')
+                ]);
+            }
 
             if ($res->getStatusCode() == 400) {
                 $this->setPaymentStatus('service-error', $res->getBody(), 'Ошибка при создании createinvoice');
 
-                return view('payments.error')->with([
-                    'error' => 'Ошибка платежа.'
+                return view('payments.way_error')->with([
+                    'error' => __('payments.payment_error')
                 ]);
             } elseif ($res->getStatusCode() == 201) {
                 $this->setPaymentStatus('created', $res->getBody());
@@ -54,8 +65,8 @@ class CryptonatorProvider implements IProvider
                 if (!$this->hashCheck($resBody)) {
                     $this->setPaymentStatus('service-error', $res->getBody(), 'Неверный secret_hash');
 
-                    return view('payments.error')->with([
-                        'error' => 'Ошибка платежа.'
+                    return view('payments.way_error')->with([
+                        'error' => __('payments.payment_error')
                     ]);
                 }
 
@@ -71,9 +82,9 @@ class CryptonatorProvider implements IProvider
 
         $formParams = [
             'merchant_id' => $this->paymentProviderData['store_id'],
-            'item_name' => $this->paymentScore->access->name_humanity,
+            'item_name' => __($this->paymentScore->access->name_humanity),
             'order_id' => $this->paymentScore->id,
-            'item_description' => $this->paymentScore->access->duration_humanity,
+            'item_description' => __($this->paymentScore->access->duration_humanity),
             'checkout_currency' => $this->paymentProviderData['checkout_currency'],
             'invoice_amount' => $this->payment->price / 100,
             'invoice_currency' => $this->paymentProviderData['invoice_currency'],
@@ -81,7 +92,7 @@ class CryptonatorProvider implements IProvider
         ];
 
         if (array_key_exists('success_url', $this->paymentProviderData)) {
-            $formParams['success_url'] = url('') . $this->paymentProviderData['success_url'];
+            $formParams['success_url'] = $this->paymentProviderData['success_url'];
         } else {
             $formParams['success_url'] = route('payments.callback.hunter', [
                 'service_slug' => $this->payment->provider->service_name_slug,
@@ -91,7 +102,7 @@ class CryptonatorProvider implements IProvider
         }
 
         if (array_key_exists('failed_url', $this->paymentProviderData)) {
-            $formParams['failed_url'] = url('') . $this->paymentProviderData['failed_url'];
+            $formParams['failed_url'] = $this->paymentProviderData['failed_url'];
         } else {
             $formParams['failed_url'] = route('payments.callback.hunter', [
                 'service_slug' => $this->payment->provider->service_name_slug,
@@ -103,6 +114,7 @@ class CryptonatorProvider implements IProvider
         $formParams['secret_hash'] = $this->generateHash($formParams);
 
         $res = $guzzleClient->post($this->serviceUrl . '/createinvoice', [
+            'timeout' => 5,
             'form_params' => $formParams
         ]);
 
@@ -112,16 +124,16 @@ class CryptonatorProvider implements IProvider
     private function createPaymentStartPayment() {
         $params = [
             'merchant_id' => $this->paymentProviderData['store_id'],
-            'item_name' => $this->paymentScore->access->name_humanity,
+            'item_name' => __($this->paymentScore->access->name_humanity),
             'order_id' => $this->paymentScore->id,
-            'item_description' => $this->paymentScore->access->duration_humanity,
+            'item_description' => __($this->paymentScore->access->duration_humanity),
             'invoice_amount' => $this->payment->price / 100,
             'invoice_currency' => $this->paymentProviderData['invoice_currency'],
             'language' => $this->paymentScore->user->locale,
         ];
 
         if (array_key_exists('success_url', $this->paymentProviderData)) {
-            $formParams['success_url'] = url('') . $this->paymentProviderData['success_url'];
+            $formParams['success_url'] = $this->paymentProviderData['success_url'];
         } else {
             $formParams['success_url'] = route('payments.callback.hunter', [
                 'service_slug' => $this->payment->provider->service_name_slug,
@@ -131,7 +143,7 @@ class CryptonatorProvider implements IProvider
         }
 
         if (array_key_exists('failed_url', $this->paymentProviderData)) {
-            $formParams['failed_url'] = url('') . $this->paymentProviderData['failed_url'];
+            $formParams['failed_url'] = $this->paymentProviderData['failed_url'];
         } else {
             $formParams['failed_url'] = route('payments.callback.hunter', [
                 'service_slug' => $this->payment->provider->service_name_slug,

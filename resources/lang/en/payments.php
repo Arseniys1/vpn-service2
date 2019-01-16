@@ -27,6 +27,7 @@ return [
     'subscription_activated' => 'Subscription activated',
     'contact_support' => 'If you have any problems with the payment, contact support',
     'after_payment_error_title' => 'Payment completed with an error',
+    'payment_error' => 'Payment error',
 
     'bitcoin' => 'Bitcoin',
     'bitcoin_payment' => 'Bitcoin payment',

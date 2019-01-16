@@ -22,7 +22,7 @@ class WayFormController extends Controller
             ->first();
 
         if (!$paymentScore) {
-            return view('payments.error')->with([
+            return view('payments.way_error')->with([
                 'error' => __('payments.error_payment_invoice_not_found')
             ]);
         }
@@ -31,7 +31,7 @@ class WayFormController extends Controller
             ->first();
 
         if (!$paymentProvider) {
-            return view('payments.error')->with([
+            return view('payments.way_error')->with([
                 'error' => __('payments.error_payment_provider_not_found')
             ]);
         }
@@ -59,7 +59,7 @@ class WayFormController extends Controller
             ->first();
 
         if (!$paymentScore) {
-            return view('payments.error')->with([
+            return view('payments.way_error')->with([
                 'error' => __('payments.error_payment_invoice_not_found')
             ]);
         }
@@ -68,7 +68,7 @@ class WayFormController extends Controller
             ->first();
 
         if (!$paymentProvider) {
-            return view('payments.error')->with([
+            return view('payments.way_error')->with([
                 'error' => __('payments.error_payment_provider_not_found')
             ]);
         }
