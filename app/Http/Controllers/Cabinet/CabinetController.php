@@ -13,9 +13,7 @@ class CabinetController extends Controller
 {
     public function index()
     {
-        return view('cabinet.cab')->with([
-            'vpnServers' => VpnServer::get(),
-        ]);
+        return view('cabinet.cab');
     }
 
     public function downloadConfig(Request $request)
