@@ -3,6 +3,7 @@
 namespace App\Api\Payments\Providers;
 
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\PaymentScore;
@@ -44,6 +45,12 @@ class CryptonatorProvider implements IProvider
             try {
                 $res = $this->createPaymentInvoice();
             } catch (ClientException $e) {
+                $this->setPaymentStatus('service-error', $e->getMessage(), 'Ошибка при создании createinvoice');
+
+                return view('payments.way_error')->with([
+                    'error' => __('payments.payment_error')
+                ]);
+            } catch (ConnectException $e) {
                 $this->setPaymentStatus('service-error', $e->getMessage(), 'Ошибка при создании createinvoice');
 
                 return view('payments.way_error')->with([
