@@ -29,6 +29,14 @@ class ServersAccessController extends Controller
 
         $vpnServer = VpnServer::where('ip', '=', $request->input('ip'))->first();
 
+        if (!$vpnServer->online) {
+            return response()->json([
+                'ok' => false,
+                'code' => 6,
+                'message' => 'Server offline.',
+            ]);
+        }
+
         if (!Auth::user()->hasActiveAccess() && !$vpnServer->free) {
             return response()->json([
                 'ok' => false,
@@ -108,6 +116,14 @@ class ServersAccessController extends Controller
         }
 
         $vpnServer = VpnServer::where('ip', '=', $request->input('ip'))->first();
+
+        if (!$vpnServer->online) {
+            return response()->json([
+                'ok' => false,
+                'code' => 5,
+                'message' => 'Server offline.',
+            ]);
+        }
 
         $vpnLogReq = VpnServerLog::where('vpn_server_id', '=', $vpnServer->id)
             ->where('user_id', '=', Auth::user()->id)

@@ -16,7 +16,6 @@ class ServersController extends Controller
             $server->append('have_access');
 
             $server->makeHidden([
-                'online',
                 'show',
                 'banned',
                 'cpu',
@@ -43,7 +42,6 @@ class ServersController extends Controller
             $server->append('have_access');
 
             $server->makeHidden([
-                'online',
                 'show',
                 'banned',
                 'cpu',

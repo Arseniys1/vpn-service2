@@ -2,6 +2,9 @@
     <div class="server">
         <div class="card mb-2">
             <div class="card-body">
+                <span class="dot bg-success" v-if="server.online"></span>
+                <span class="dot bg-danger" v-if="!server.online"></span>
+
                 {{ server.ip + ':' + server.port }}
                 {{ server.country.name + ' ' + server.country.iso }}
 
@@ -40,7 +43,7 @@
 
         created() {
             if (laravel.auth) {
-                if (laravel.hasActiveAccess || this.server.free) {
+                if ((laravel.hasActiveAccess || this.server.free) && this.server.online) {
                     if (this.server.have_access) {
                         this.removeAccessShow = true;
                         this.downloadConfigShow = true;
@@ -96,6 +99,18 @@
                             this.createAccessShow = true;
 
                             errorsShow.showError(res.data.message);
+
+                        } else if (res.data.code === 6) {
+
+                            this.createAccessShow = false;
+                            this.removeAccessShow = false;
+                            this.downloadConfigShow = false;
+                            this.waitingShow = false;
+
+                            this.server.online = false;
+
+                            errorsShow.showError(res.data.message);
+
                         }
                     }
                 }).catch((err) => {
@@ -143,6 +158,17 @@
 
                             this.waitingShow = false;
                             this.createAccessShow = true;
+
+                        } else if (res.data.code === 5) {
+
+                            this.createAccessShow = false;
+                            this.removeAccessShow = false;
+                            this.downloadConfigShow = false;
+                            this.waitingShow = false;
+
+                            this.server.online = false;
+
+                            errorsShow.showError(res.data.message);
 
                         }
                     }

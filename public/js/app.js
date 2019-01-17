@@ -48565,6 +48565,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "server-component",
@@ -48583,7 +48586,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         if (laravel.auth) {
-            if (laravel.hasActiveAccess || this.server.free) {
+            if ((laravel.hasActiveAccess || this.server.free) && this.server.online) {
                 if (this.server.have_access) {
                     this.removeAccessShow = true;
                     this.downloadConfigShow = true;
@@ -48638,6 +48641,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         _this.createAccessShow = true;
 
                         errorsShow.showError(res.data.message);
+                    } else if (res.data.code === 6) {
+
+                        _this.createAccessShow = false;
+                        _this.removeAccessShow = false;
+                        _this.downloadConfigShow = false;
+                        _this.waitingShow = false;
+
+                        _this.server.online = false;
+
+                        errorsShow.showError(res.data.message);
                     }
                 }
             }).catch(function (err) {
@@ -48683,6 +48696,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                         _this2.waitingShow = false;
                         _this2.createAccessShow = true;
+                    } else if (res.data.code === 5) {
+
+                        _this2.createAccessShow = false;
+                        _this2.removeAccessShow = false;
+                        _this2.downloadConfigShow = false;
+                        _this2.waitingShow = false;
+
+                        _this2.server.online = false;
+
+                        errorsShow.showError(res.data.message);
                     }
                 }
             }).catch(function (err) {
@@ -48735,8 +48758,15 @@ var render = function() {
   return _c("div", { staticClass: "server" }, [
     _c("div", { staticClass: "card mb-2" }, [
       _c("div", { staticClass: "card-body" }, [
+        _vm.server.online
+          ? _c("span", { staticClass: "dot bg-success" })
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.server.online
+          ? _c("span", { staticClass: "dot bg-danger" })
+          : _vm._e(),
         _vm._v(
-          "\n            " +
+          "\n\n            " +
             _vm._s(_vm.server.ip + ":" + _vm.server.port) +
             "\n            " +
             _vm._s(_vm.server.country.name + " " + _vm.server.country.iso) +
