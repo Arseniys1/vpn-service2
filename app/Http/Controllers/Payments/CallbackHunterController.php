@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Payments;
 
+use App\Api\Payments\Providers\RobokassaProvider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\PaymentProvider;
@@ -21,6 +22,8 @@ class CallbackHunterController extends Controller
 
         if ($paymentProvider->service_name == 'cryptonator.com') {
             $provider = new CryptonatorProvider();
+        } elseif ($paymentProvider->service_name == 'robokassa.com') {
+            $provider = new RobokassaProvider();
         } else {
             return response('Provider not found', 400);
         }
