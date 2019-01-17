@@ -40,7 +40,7 @@
 
         created() {
             if (laravel.auth) {
-                if (laravel.hasActiveAccess) {
+                if (laravel.hasActiveAccess || this.server.free) {
                     if (this.server.have_access) {
                         this.removeAccessShow = true;
                         this.downloadConfigShow = true;

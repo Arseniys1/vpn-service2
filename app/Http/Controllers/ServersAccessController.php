@@ -27,7 +27,9 @@ class ServersAccessController extends Controller
             ]);
         }
 
-        if (!Auth::user()->hasActiveAccess()) {
+        $vpnServer = VpnServer::where('ip', '=', $request->input('ip'))->first();
+
+        if (!Auth::user()->hasActiveAccess() && !$vpnServer->free) {
             return response()->json([
                 'ok' => false,
                 'code' => 5,
@@ -38,8 +40,6 @@ class ServersAccessController extends Controller
         Auth::user()->makeHidden([
             'access',
         ]);
-
-        $vpnServer = VpnServer::where('ip', '=', $request->input('ip'))->first();
 
         $vpnLogReq = VpnServerLog::where('vpn_server_id', '=', $vpnServer->id)
             ->where('user_id', '=', Auth::user()->id)
