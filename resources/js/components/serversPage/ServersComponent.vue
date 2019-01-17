@@ -18,9 +18,12 @@
         ],
 
         data() {
+            const servers = JSON.parse(atob(this.serversProp));
+            const langs = JSON.parse(atob(this.langsProp));
+            
             return {
-                servers: this.serversProp.data,
-                langs: this.langsProp,
+                servers: servers.data,
+                langs: langs,
             };
         },
 
