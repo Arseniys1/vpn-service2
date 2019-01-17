@@ -9,7 +9,7 @@
 
                     <div class="card-body">
                         <div id="servers">
-                            <servers-component :langs-prop="'{{ base64_encode(json_encode($langs)) }}'" :servers-prop="'{{ base64_encode(json_encode($servers)) }}'"></servers-component>
+                            <servers-component :langs-prop="'{{ base64_encode(json_encode($langs)) }}'" :servers-prop="'{{ base64_encode(json_encode($servers, JSON_NUMERIC_CHECK)) }}'"></servers-component>
                         </div>
 
                         {{ $servers->links() }}
