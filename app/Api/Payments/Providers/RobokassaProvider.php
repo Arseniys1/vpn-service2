@@ -48,8 +48,11 @@ class RobokassaProvider implements IProvider
             "Culture" => $this->paymentScore->user->locale,
             "Encoding" => "utf-8",
             "OutSumCurrency" => "USD",
-            "isTest" => true,
         ];
+
+        if (array_search('isTest', $this->paymentProviderData) !== false) {
+            $params['isTest'] = $this->paymentProviderData['isTest'];
+        }
 
         $params["SignatureValue"] = $this->generateSignatureValue($params);
 
