@@ -63,8 +63,16 @@
                     </li>
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route_locale('cabinet.support.my_tickets') }}">{{ __('app.support') }}</a>
+                            <a class="nav-link"
+                               href="{{ route_locale('cabinet.support.my_tickets') }}">{{ __('app.support') }}</a>
                         </li>
+
+                        @if(Auth::user()->hasRole('admin'))
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ route('admin.users') }}">Админка</a>
+                            </li>
+                        @endif
                     @endauth
                 </ul>
 

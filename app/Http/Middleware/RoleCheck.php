@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleCheck
 {
+
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * @param $request
+     * @param Closure $next
+     * @param array ...$roles
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|mixed
      */
     public function handle($request, Closure $next, ...$roles)
     {
