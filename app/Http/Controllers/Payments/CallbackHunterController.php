@@ -22,7 +22,7 @@ class CallbackHunterController extends Controller
 
         if ($paymentProvider->service_name == 'cryptonator.com') {
             $provider = new CryptonatorProvider();
-        } elseif ($paymentProvider->service_name == 'robokassa.com') {
+        } elseif ($paymentProvider->service_name == 'robokassa.ru') {
             $provider = new RobokassaProvider();
         } else {
             return response('Provider not found', 400);
