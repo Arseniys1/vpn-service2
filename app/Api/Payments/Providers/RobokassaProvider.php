@@ -75,7 +75,7 @@ class RobokassaProvider implements IProvider
 
     private function checkSignatureValue($array) {
         $string = $array['OutSum'] . ':' . $array['InvId'] . ':' . $this->paymentProviderData['MerchantPassword2'];
-        $string = sha1($string);
+        $string = strtoupper(sha1($string));
 
         if ($string == $array['SignatureValue']) {
             return true;
