@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'locale' => \App\Http\Middleware\Locale::class,
         'echoServerVerify' => \App\Http\Middleware\EchoServerVerify::class,
         'roles' => \App\Http\Middleware\RoleCheck::class,
+        'publicApiVerify' => \App\Http\Middleware\PublicApiVerify::class,
     ];
 
     /**

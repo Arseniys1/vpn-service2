@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 
+require "public_api/vpn_servers.php";
+
 Route::group(['prefix' => 'vpn/{token}', 'middleware' => 'vpnVerify'], function () {
     Route::post('/verify', 'Api\VpnController@verify');
     Route::post('/connect', 'Api\VpnController@connect');
