@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class VpnServerLog extends Model
 {
@@ -15,7 +16,7 @@ class VpnServerLog extends Model
 
         static::creating(function ($query) {
             if ($query->type == 'request') {
-                $query->event_id = uniqid(str_random('5'));
+                $query->event_id = uniqid(Str::random('5'));
             }
         });
     }

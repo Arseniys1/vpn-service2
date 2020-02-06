@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UsersCreateController extends Controller
 {
@@ -36,8 +37,8 @@ class UsersCreateController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
-        $user->vpn_username = str_random(30);
-        $user->vpn_password = str_random(30);
+        $user->vpn_username = Str::random(30);
+        $user->vpn_password = Str::random(30);
         $user->locale = $request->input('locale');
         $user->save();
 

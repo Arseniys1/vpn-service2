@@ -20,8 +20,8 @@ class UsersSeeder extends Seeder
                 'name' => 'Arseniys',
                 'email' => 'thevalakas1@gmail.com',
                 'password' => Hash::make('root'),
-                'vpn_username' => str_random(30),
-                'vpn_password' => str_random(30),
+                'vpn_username' => Str::random(30),
+                'vpn_password' => Str::random(30),
                 'locale' => 'ru',
             ],
         ]);

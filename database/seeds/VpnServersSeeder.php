@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class VpnServersSeeder extends Seeder
 {
@@ -25,7 +26,7 @@ class VpnServersSeeder extends Seeder
                 'show' => true,
                 'banned' => false,
                 'free' => false,
-                'token' => str_random(30),
+                'token' => Str::random(30),
             ],
         ]);
     }
