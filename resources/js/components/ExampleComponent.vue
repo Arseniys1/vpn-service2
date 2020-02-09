@@ -16,6 +16,8 @@
 
 <script>
     export default {
+        name: "example-component",
+
         props: [
             'ttt',
         ],
