@@ -61,6 +61,10 @@
                         <a class="nav-link"
                            href="{{ route_locale('servers.free') }}">{{ __('app.free_servers_list') }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{{ route_locale('cabinet.vpn.path') }}">VPN маршрут</a>
+                    </li>
                     @auth
                         <li class="nav-item">
                             <a class="nav-link"

@@ -15,6 +15,8 @@ Route::post('{locale}/cabinet/settings/password', 'Cabinet\SettingsPassControlle
 Route::get('{locale}/cabinet/tariffs', 'Cabinet\TariffsController@index')->middleware('locale', 'auth')->name('cabinet.tariffs');
 Route::get('{locale}/cabinet/tariffs/score/{access_id}', 'Cabinet\TariffsController@createPaymentScore')->middleware('locale', 'auth')->name('cabinet.tariffs.score');
 
+Route::get('{locale}/vpn/path/configure', 'Cabinet\VpnPathController@index')->middleware('locale', 'auth')->name('cabinet.vpn.path');
+
 Route::get('/cabinet/download/config/{ip}', 'Cabinet\CabinetController@downloadConfig')->middleware('auth')->name('cabinet.download.config');
 
 Route::get('/{locale}/servers', 'ServersController@index')->middleware('locale')->name('servers.index');

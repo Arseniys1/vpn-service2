@@ -23,6 +23,7 @@ window.Vue = require('vue');
 Vue.component('errors-show-component', require('./components/serversPage/ErrorsShowComponent.vue').default);
 Vue.component('server-component', require('./components/serversPage/ServerComponent.vue').default);
 Vue.component('servers-component', require('./components/serversPage/ServersComponent.vue').default);
+Vue.component('vpn-path-configure', require('./components/VpnPathConfigure/VpnPathConfigure.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,9 +31,10 @@ Vue.component('servers-component', require('./components/serversPage/ServersComp
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app'
-});
+// const app = new Vue({
+//     el: '#app'
+// });
 
 require('./errorsShow');
 require('./serversPage');
+require('./vpnPathConfigure');

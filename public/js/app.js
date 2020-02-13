@@ -1899,6 +1899,95 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "vpn-path-configure",
+  props: ['serversProp'],
+  data: function data() {
+    var servers = JSON.parse(atob(this.serversProp));
+    servers.push({
+      ip: '127.0.0.2',
+      port: 443
+    });
+    var path = {
+      servers: servers.slice(),
+      selected: null
+    };
+    return {
+      servers: servers,
+      serversSelected: [],
+      maxServersInPath: 5,
+      pathElements: [path]
+    };
+  },
+  methods: {
+    changeServer: function changeServer(index, event) {
+      var server_index = event.target.value;
+
+      if (server_index === '') {
+        return event.preventDefault();
+      } else if (server_index === 'tor') {
+        return this.pathElements[index].selected = 'tor';
+      }
+
+      this.pathElements[index].selected = this.servers[server_index];
+      this.serversSelected.push(this.servers[server_index]);
+    },
+    addPathElement: function addPathElement(event) {
+      if (this.pathElements[this.pathElements.length - 1].selected === null) {
+        window.errorsShow.showError('Выберите сервер!');
+        return event.preventDefault();
+      }
+
+      this.pathElements.push({
+        servers: this.servers.slice(),
+        selected: null
+      });
+    },
+    create: function create(event) {
+      console.log(this.pathElements);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/serversPage/ErrorsShowComponent.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/serversPage/ErrorsShowComponent.vue?vue&type=script&lang=js& ***!
@@ -38119,6 +38208,127 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=template&id=87028cd8&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=template&id=87028cd8&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "vpn-path-configure" }, [
+    _c(
+      "form",
+      [
+        _vm._l(_vm.pathElements, function(path, index) {
+          return _c(
+            "div",
+            { key: "server-" + index, staticClass: "form-group" },
+            [
+              _c(
+                "label",
+                { key: "label-" + index, attrs: { for: "select-" + index } },
+                [_vm._v("Сервер #" + _vm._s(index + 1))]
+              ),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  key: "select-" + index,
+                  staticClass: "form-control",
+                  attrs: { id: "select-" + index },
+                  on: {
+                    change: function($event) {
+                      return _vm.changeServer(index, $event)
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("Выберите сервер")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(path.servers, function(server, server_index) {
+                    return server.ip &&
+                      server.port &&
+                      (_vm.serversSelected.indexOf(server) === -1 ||
+                        path.selected === server)
+                      ? _c(
+                          "option",
+                          {
+                            key: "option-" + index + "-" + server_index,
+                            domProps: { value: server_index }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(server.ip + ":" + server.port) +
+                                "\n                "
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  }),
+                  _vm._v(" "),
+                  _vm.pathElements.length > 1 &&
+                  _vm.pathElements.length - 1 === index
+                    ? _c("option", { attrs: { value: "tor" } }, [_vm._v("TOR")])
+                    : _vm._e()
+                ],
+                2
+              )
+            ]
+          )
+        }),
+        _vm._v(" "),
+        _vm.pathElements.length < _vm.maxServersInPath &&
+        _vm.pathElements.length < _vm.servers.length + 1
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.addPathElement($event)
+                  }
+                }
+              },
+              [_vm._v("Добавить сервер\n        ")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.create($event)
+              }
+            }
+          },
+          [_vm._v("Создать")]
+        )
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/serversPage/ErrorsShowComponent.vue?vue&type=template&id=0fea7aea&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/serversPage/ErrorsShowComponent.vue?vue&type=template&id=0fea7aea&scoped=true& ***!
@@ -50494,19 +50704,21 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('errors-show-component', __webpack_require__(/*! ./components/serversPage/ErrorsShowComponent.vue */ "./resources/js/components/serversPage/ErrorsShowComponent.vue")["default"]);
 Vue.component('server-component', __webpack_require__(/*! ./components/serversPage/ServerComponent.vue */ "./resources/js/components/serversPage/ServerComponent.vue")["default"]);
 Vue.component('servers-component', __webpack_require__(/*! ./components/serversPage/ServersComponent.vue */ "./resources/js/components/serversPage/ServersComponent.vue")["default"]);
+Vue.component('vpn-path-configure', __webpack_require__(/*! ./components/VpnPathConfigure/VpnPathConfigure.vue */ "./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-var app = new Vue({
-  el: '#app'
-});
+// const app = new Vue({
+//     el: '#app'
+// });
 
 __webpack_require__(/*! ./errorsShow */ "./resources/js/errorsShow.js");
 
 __webpack_require__(/*! ./serversPage */ "./resources/js/serversPage.js");
+
+__webpack_require__(/*! ./vpnPathConfigure */ "./resources/js/vpnPathConfigure.js");
 
 /***/ }),
 
@@ -50565,6 +50777,75 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _VpnPathConfigure_vue_vue_type_template_id_87028cd8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VpnPathConfigure.vue?vue&type=template&id=87028cd8&scoped=true& */ "./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=template&id=87028cd8&scoped=true&");
+/* harmony import */ var _VpnPathConfigure_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VpnPathConfigure.vue?vue&type=script&lang=js& */ "./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _VpnPathConfigure_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _VpnPathConfigure_vue_vue_type_template_id_87028cd8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _VpnPathConfigure_vue_vue_type_template_id_87028cd8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "87028cd8",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/VpnPathConfigure/VpnPathConfigure.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VpnPathConfigure_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./VpnPathConfigure.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VpnPathConfigure_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=template&id=87028cd8&scoped=true&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=template&id=87028cd8&scoped=true& ***!
+  \******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VpnPathConfigure_vue_vue_type_template_id_87028cd8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./VpnPathConfigure.vue?vue&type=template&id=87028cd8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VpnPathConfigure/VpnPathConfigure.vue?vue&type=template&id=87028cd8&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VpnPathConfigure_vue_vue_type_template_id_87028cd8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VpnPathConfigure_vue_vue_type_template_id_87028cd8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -50839,6 +51120,25 @@ if (uri_re.test(uri) || uri_free_re.test(uri)) serversPageStart();
 function serversPageStart() {
   var serversApp = new Vue({
     el: '#servers'
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/vpnPathConfigure.js":
+/*!******************************************!*\
+  !*** ./resources/js/vpnPathConfigure.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var uri = location.pathname;
+var uri_re = /^\/[a-zA-Z0-9]+\/vpn\/path\/configure$/;
+if (uri_re.test(uri)) vpnPathConfigureStart();
+
+function vpnPathConfigureStart() {
+  var vpnPathConfigureApp = new Vue({
+    el: '#vpn-path-configure'
   });
 }
 
